@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>generator</title>
+  </head>
+  <style>
+    .btn {
+      background-color: rgb(15, 117, 15);
+    }
+  </style>
+  <body>
+    <div class="container">
+      <button class="btn">generator button</button>
+    </div>
+    <script>
+      document
+        .querySelector(".container>button")
+        .addEventListener("click", async (e) => {
+          console.log("yes inam herer");
+          let a = await fetch("/generate");
+          let r = await a.json();
+          console.log(r);
+        });
+    </script>
+  </body>
+</html>

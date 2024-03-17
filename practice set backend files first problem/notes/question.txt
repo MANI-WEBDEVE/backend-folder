@@ -1,0 +1,10 @@
+Express js 
+install Express ✔
+Express js boilerpalte code✔{go the google {search the npm {and copy express boilerplate}}}✔
+express js ejs setup✔
+ install ejs✔ 
+ set views engine✔
+ create ejs files✔
+ render ejs files inside route✔
+ express  static files setup✔
+ architecture of public folder✔

@@ -1,0 +1,7 @@
+{
+  "type": "module",
+  "dependencies": {
+    "init": "^0.1.2"
+  
+  }
+}
