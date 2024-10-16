@@ -1,0 +1,17 @@
+{
+  "name": "from_handling",
+  "version": "1.0.0",
+  "description": "handle backend process of forms and making sure the data coming from any frontend library, frameworks, templating engines, we still handle it at the backend",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cookie-parser": "^1.4.6",
+    "express": "^4.19.2"
+  }
+}
