@@ -16,6 +16,10 @@ const todoSchema = new mongoose.Schema({
     isCompleted: {
         type:Boolean,
         default:false,
+    },
+    _id:{
+        type: mongoose.Schema.Types.ObjectId,
+        default:()=> new mongoose.Types.ObjectId(),
     }
 
 })
