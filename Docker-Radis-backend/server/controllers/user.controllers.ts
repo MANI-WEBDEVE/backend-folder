@@ -106,3 +106,16 @@ export const loginUser = async (
     return response.status(500).json({ error });
   }
 };
+
+export const logoutUser = async (_: Request, response: Response): Promise<any> => {
+  try {
+    return response
+      .status(200)
+      .cookie("token", "", { maxAge: 0 })
+      .clearCookie("token")
+      .json({ success: true, message: "Logout Successfully" });
+  } catch (error) {
+    console.log(error);
+    return response.status(500).json({ error });
+  }
+};
