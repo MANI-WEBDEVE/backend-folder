@@ -6,8 +6,10 @@ export type UserRegister = {
 }
 
 export type TodoType = {
+    _id?: number;
     title: string;
-    description:string
+    description:string;
+    isCompleted:boolean
 }
 
 export type TokenType = {

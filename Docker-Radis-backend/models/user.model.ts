@@ -10,8 +10,8 @@ export interface IUser extends Document {
 
     password: string;
 
-    todos: [{title:string, description:string, isCompleted:boolean}];
-
+    todos: { title: string; description: string; isCompleted: boolean; }[];
+    
     comparePassword(candidatePassword: string): Promise<boolean>;
 
 }
