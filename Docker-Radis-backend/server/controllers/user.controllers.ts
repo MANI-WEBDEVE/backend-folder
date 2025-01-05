@@ -79,7 +79,7 @@ export const loginUser = async (
         .json({ success: false, message: "Invalid Credentials" });
     }
 
-    const token = await jwt.sign(
+    const token =  jwt.sign(
       { id: user._id, email: user.email },
       process.env.JWT_SECRET as string,
       { expiresIn: "1d" }
@@ -100,7 +100,7 @@ export const loginUser = async (
         sameSite: "strict",
         secure: true,
       })
-      .json({ success: true, message: "Login Successfully", userData });
+      .json({ success: true, message: "Login Successfully", userData, token });
   } catch (error) {
     console.log(error);
     return response.status(500).json({ error });
