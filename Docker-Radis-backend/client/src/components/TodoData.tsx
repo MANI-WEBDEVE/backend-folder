@@ -25,7 +25,9 @@ interface TodoDataType {
 
 const TodoData = () => {
   const [todoData, setTodoData] = useState<TodoDataType[]>([]);
-  const [checkBox, setCheckBox] = useState(false);
+  const [updateTitle, setUpdateTitle] = useState("");
+  const [updateDescription, setUpdateDescription] = useState("");
+  const [checkbox, setCheckbox] = useState(false)
   useEffect(() => {
     const getTodoData = async () => {
       try {
@@ -70,9 +72,20 @@ const TodoData = () => {
     }
   };
 
-  const checkTodoCom = async (id: number) => {
-    setCheckBox(!checkBox);
-  };
+  const updateTodo = async (id:number) => {
+      try {
+        const res = await axios.put(`http://localhost:8000/api/v1/todo/${id}`, {title:updateTitle, description:updateDescription, isCompleted: checkbox}, {withCredentials: true});
+        if(res.status === 200){
+          toast.success(res.data.message)
+        }
+        console.log(res)
+      } catch (error) {
+        const err = error as AxiosError
+        console.log(err)
+        toast.error((err.response?.data as { message: string })?.message || "Something went wrong")
+      }
+  }
+
   return (
     <div className="grid grid-cols-1  md:grid-cols-2 gap-4 p-4">
       {todoData.length === 0 && (
@@ -93,11 +106,11 @@ const TodoData = () => {
           </div>
           <div className="flex flex-col items-center justify-between gap-3">
             <div>
-              <Checkbox
-                className="border-[1px] border-gray-300"
-                checked={checkBox}
-                onClick={() => checkTodoCom(todo._id as number)}
-              />
+              {todo.isCompleted ? (<>
+                <p className="text-green-600 text-sm">Compelete ✔</p>
+              </>): (<>
+                <p className="text-yellow-700 text-xs">Not Compelete ❌</p>
+              </>)}
             </div>
             <div>
               <Trash2
@@ -106,42 +119,53 @@ const TodoData = () => {
               />
             </div>
             <div>
-              <Dialog>
+              <Dialog >
                 <DialogTrigger asChild>
                   <Pen className="text-blue-500 " />
                 </DialogTrigger>
-                <DialogContent className="sm:max-w-[425px]">
+                <DialogContent className="sm:max-w-[425px] bg-neutral-900/60 text-white border-2 border-neutral-700">
                   <DialogHeader>
-                    <DialogTitle>Edit profile</DialogTitle>
+                    <DialogTitle>Edit Todo</DialogTitle>
                     <DialogDescription>
-                      Make changes to your profile here. Click save when you're
-                      done.
+                      Make changes to your todo and save the changes 
                     </DialogDescription>
                   </DialogHeader>
                   <div className="grid gap-4 py-4">
                     <div className="grid grid-cols-4 items-center gap-4">
                       <Label htmlFor="name" className="text-right">
-                        Name
+                        update Title
                       </Label>
                       <Input
                         id="name"
-                        value="Pedro Duarte"
+                        value={updateTitle}
                         className="col-span-3"
+                        onChange={(e) => setUpdateTitle(e.target.value)}
                       />
                     </div>
                     <div className="grid grid-cols-4 items-center gap-4">
                       <Label htmlFor="username" className="text-right">
-                        Username
+                        update Description
                       </Label>
                       <Input
-                        id="username"
-                        value="@peduarte"
+                        
+                        value={updateDescription}
                         className="col-span-3"
+                        onChange={(e) => setUpdateDescription(e.target.value)}
+                      />
+                    </div>
+                    <div className="grid grid-cols-4 items-center gap-4">
+                    <Label htmlFor="username" className="text-right">
+                        Completed
+                      </Label>
+                      <Checkbox
+                        className="border-[1px] border-gray-300"
+                        checked={checkbox}
+                        onClick={() => setCheckbox(!checkbox)}
                       />
                     </div>
                   </div>
                   <DialogFooter>
-                    <Button type="submit">Save changes</Button>
+                    <Button  onClick={() => updateTodo(todo._id as number)}>Save changes</Button>
                   </DialogFooter>
                 </DialogContent>
               </Dialog>
@@ -154,4 +178,3 @@ const TodoData = () => {
 };
 
 export default TodoData;
-
