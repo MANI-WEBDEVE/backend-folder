@@ -14,11 +14,16 @@ const Register = () => {
 
   const handleRegiter: SubmitHandler<RegisterType> = async (data) => {
     try {
-        const response = await axios.post("http://localhost:8000/api/v1/auth/register", {fullName: data.fullName, email: data.email, password: data.password}, {
-            headers: {
-                "Content-Type": "application/json"
-            }   
-        })
+      const response = await axios.post("http://localhost:8000/api/v1/auth/register", {
+        fullName: data.fullName,
+        email: data.email,
+        password: data.password
+    }, {
+        headers: {
+            "Content-Type": "application/json"
+        },
+        withCredentials: true
+    });
         if(response.status === 201){
             toast.success(response.data.message)
             navigate("/login")

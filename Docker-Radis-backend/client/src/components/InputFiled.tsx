@@ -14,25 +14,28 @@ const InputFiled = () => {
     formState: { errors },
   } = useForm<InputType>({ resolver: zodResolver(todoSchema) });
 
-  const onSubmit: SubmitHandler<InputType> = async (data) => {
+  const onSubmit: SubmitHandler<InputType> = async (data,e) => {
     try {
+     
       const res = await axios.post(
         "http://localhost:8000/api/v1/todo",
         { title: data.title, description: data.description },
         {
-          headers: {
-            "Content-Type": "application/json",
-          },
+          withCredentials:true
         }
       );
       if (res.status === 201) {
         toast.success(res.data.message);
+        e?.target.reset();
       } else {
-        toast.error("Something went wrong");
+        toast.error(res.data.message);
       }
-    } catch (error) {
-      console.log(error);
-      toast.error("Something went wrong");
+    }
+    catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        
+        toast.error(error.response?.data.message);
+      }
     }
   };
 

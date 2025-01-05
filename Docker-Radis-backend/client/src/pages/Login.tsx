@@ -7,12 +7,10 @@ import { loginSchema } from "@/zodSchema/loginSchema";
 import { Link, useNavigate } from "react-router-dom";
 import axios, { AxiosError } from "axios";
 import toast from "react-hot-toast";
-import {jwtDecode} from 'jwt-decode';
-import  { useEffect, useState } from 'react';
+import { userUserStore } from "@/store/userSlice";
 
 const Login = () => {
     const navigate = useNavigate()
-    const [getToken, setGetToken] = useState<string | null>(null)
   const { register, handleSubmit, formState: { errors } } = useForm<LoginType>({resolver: zodResolver(loginSchema)});
 
   const handleRegiter: SubmitHandler<LoginType> = async (data) => {
@@ -25,9 +23,12 @@ const Login = () => {
         })
         if(response.status === 200){
             toast.success(response.data.message)
-     
-            console.log(response.data.token)
-            setGetToken(response.data.token)
+    
+            navigate("/")
+            if(response.data.token){
+              userUserStore.getState().setUser(response.data.token)
+            }
+          
            
         }
         else {
@@ -38,18 +39,8 @@ const Login = () => {
         toast.error((err.response?.data as { message: string })?.message || "Something went wrong")
     }
   }
-    useEffect(() => {
-        if(getToken){
-            try {
-                const decodedToken = jwtDecode(getToken);
-                console.log('Decoded Token:', decodedToken);
-                navigate('/')
-            } catch (error) {
-                console.error('Invalid token:', error);
-            }
-        }
-    }, [getToken])
- 
+   
+  
   return (
     <>
       <div className="flex flex-col items-center justify-center min-h-screen bg-neutral-900">

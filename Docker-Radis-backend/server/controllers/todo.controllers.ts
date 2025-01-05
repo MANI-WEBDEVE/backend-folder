@@ -1,5 +1,5 @@
 import type { Request, Response } from "express";
-import type { TodoType, TokenType } from "../../types/user";
+import type { TodoType, TokenType } from "../types/user";
 import { todosSchema } from "../Schemas/todos.Schema";
 import { Todo } from "../models/todo.model";
 import jwt from "jsonwebtoken";
