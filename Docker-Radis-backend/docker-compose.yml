@@ -1,0 +1,53 @@
+version: '2.0'
+
+name: mern-todo-app
+
+services:
+  mongo:
+    image: mongo:6
+    container_name: mogodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - mern-todo-app
+
+  
+  backend:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    env_file:
+      - ./server/.env
+    volumes:
+      - ./server:/index
+      - /app/node_modules
+    networks:
+      - mern-todo-app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - mongo
+    command: npm run dev
+
+  frontend:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    volumes:
+      - ./client:/app
+      - /app/node_modules
+    networks:
+      - mern-todo-app
+    command: npm run dev
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+volumes:
+    mongo_data:
+
+networks:
+  mern-todo-app:
+      driver: bridge

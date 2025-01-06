@@ -43,9 +43,9 @@ const InputFiled = () => {
     <>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="w-full h-full mx-auto flex justify-center items-start mt-3 gap-4"
+        className="w-full h-full mx-auto flex flex-col items-center justify-center md:flex-row md:justify-center md:items-start mt-5 gap-1 md:gap-4 "
       >
-        <div className="flex flex-col space-y-4 w-1/2">
+        <div className="flex flex-col space-y-2 md:space-y-4 w-full  md:w-1/2 ">
           <Input
             {...register("title", { required: true })}
             name="title"
@@ -61,10 +61,10 @@ const InputFiled = () => {
           />
           <p className="text-xs text-red-500">{errors.description?.message}</p>
         </div>
-        <div className="">
+        <div className="w-full md:w-[10%]">
           <Button
             type="submit"
-            className="bg-slate-300/15 rounded-xl uppercase font-bold "
+            className="w-full  bg-slate-300/15 rounded-xl uppercase font-bold "
           >
             ADD
           </Button>

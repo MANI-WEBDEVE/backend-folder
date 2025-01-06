@@ -3,10 +3,10 @@
   "module": "index.ts",
   "type": "module",
   "scripts": {
-    "dev": "bun run --watch index.ts"
+    "dev": "npm run index.ts"
   },
   "devDependencies": {
-    "@types/bcrypt": "^5.0.2",
+    "@types/bcrypt": "^5.0.2", 
     "@types/bcryptjs": "^2.4.6",
     "@types/bun": "latest",
     "@types/cookie-parser": "^1.4.8",
